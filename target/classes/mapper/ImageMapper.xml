@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.judge.pose.dao.ImageMapper" >
+    <select id="StartExercise" parameterType="int" resultType="java.lang.String">
+    select  address
+    from image
+    where id =any (
+      select  image_id
+      from exercises_has_image
+      where exercises_id = #{id})
+</select>
+
+<!--<select id="GetAllCourses" parameterType="java.lang.String" resultType="map">-->
+<!--    select exercises.id, exercises.title, exercises.description, image.address-->
+<!--    from exercises, image, exercises_has_image-->
+<!--    where exercises.id = exercises_has_image.exercises_id and exercises_has_image.index_ = 1-->
+<!--    and exercises.type = #{arg0} and exercises_has_image.image_id = image.id-->
+<!--</select>-->
+
+<!--<select id="IsUserWithCourses"  resultType="int">-->
+<!--    select count(*)-->
+<!--    from user_has_exercises-->
+<!--    where user_has_exercises.user_id = #{id} and user_has_exercises.exercises_id = #{ex_id}-->
+<!--</select>-->
+
+<select id="GetRecommendation"  resultType="map">
+    select exercises.id, exercises.title, exercises.description, image.address
+    from exercises, image, exercises_has_image,user_has_exercises
+    where exercises.id = exercises_has_image.exercises_id and exercises.id = user_has_exercises.user_id and exercises_has_image.index_ = 1
+    and user_has_exercises.user_id != #{id} and exercises_has_image.image_id = image.id
+</select>
+</mapper>
