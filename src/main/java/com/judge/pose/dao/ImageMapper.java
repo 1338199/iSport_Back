@@ -4,6 +4,7 @@ import com.judge.pose.domain.Image;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.ArrayList;
@@ -19,6 +20,12 @@ public interface ImageMapper extends Mapper<Image> {
             "    where exercises.id = exercises_has_image.exercises_id and exercises_has_image.index_ = 1 " +
             "    and exercises.type = #{type} and exercises_has_image.image_id = image.id")
     List<Map<String,Object> > GetAllCourses(@Param("type") String type);
+
+    @Select("select exercises.id, exercises.title, exercises.comments, image.address, exercises.commentUser,exercises.type " +
+            "    from exercises, image, exercises_has_image" +
+            "    where exercises.id = exercises_has_image.exercises_id and exercises_has_image.index_ = 1 " +
+            "    and  exercises_has_image.image_id = image.id")
+    List<Map<String,Object> > GetAllCoursesNew();
     List<Map<String,Object> >GetRecommendation(int id);
 
     @Select("select count(*) " +
@@ -35,4 +42,8 @@ public interface ImageMapper extends Mapper<Image> {
             "where i.id = e.image_id and e.exercises_id=#{exId}")
     ArrayList<Image> selectImagesByEx(@Param("exId") Integer exId);
 
+    @Update("update exercises "+
+            "set exercises.comments= #{comment} , exercises.commentUser = #{commentUser} "+
+            "where exercises.id  = #{exId}")
+    void updateComment(@Param("exId") Integer exId, @Param("commentUser") String commentUser, @Param("comment") String comment);
 }

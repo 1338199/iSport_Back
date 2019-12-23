@@ -31,7 +31,11 @@ public class ExercisesController {
     @RequestMapping(value = "/courses", method = RequestMethod.GET)
     @ResponseBody
     public ResultModel2 getAllCourses(@RequestParam("type") String type, @RequestParam("id") int id){
-        List<Map<String,Object> >result = imageMapper.GetAllCourses(type);
+        List<Map<String, Object>> result = imageMapper.GetAllCourses(type);
+        System.out.println(type);
+        if(type.equals("all")){
+            result= imageMapper.GetAllCoursesNew();
+        }
         for(int i = 0;i < result.size();i++){
             System.out.println((result.get(i)).get("id") instanceof Integer);
             System.out.println((result.get(i)).get("id"));
@@ -89,6 +93,13 @@ public class ExercisesController {
             return "OK";
 
         }
+    }
+
+    @RequestMapping(value = "/updateComments")
+    @ResponseBody
+    public String updateComments(@RequestParam("exId") Integer exId,@RequestParam("commentUser") String commentUser, @RequestParam("comment") String comment) {
+       imageMapper.updateComment(exId,commentUser,comment);
+       return "OK";
     }
 }
 
