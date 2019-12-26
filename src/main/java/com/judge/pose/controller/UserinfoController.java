@@ -1,6 +1,7 @@
 package com.judge.pose.controller;
 
 import com.judge.pose.dao.UserinfoMapper;
+import com.judge.pose.domain.User;
 import com.judge.pose.model.ImageStoreModel;
 import com.judge.pose.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,16 @@ public class UserinfoController {
         }else{
             return "delete failed";
         }
+    }
+
+    @RequestMapping(value = "{id}/updateInfo", method = RequestMethod.GET)
+    @ResponseBody
+    public String updateUserInfo(@PathVariable("id") Integer id, @RequestParam("name") String name, @RequestParam("email") String email,
+                                 @RequestParam("tel") String tel,@RequestParam("password") String password){
+
+            userinfoMapper.UpdateUser(id,name,email,tel,password);
+            return "update success";
+
     }
     public String upLoad(MultipartFile file){
         ImageStoreModel imageStoreModel= new ImageStoreModel();

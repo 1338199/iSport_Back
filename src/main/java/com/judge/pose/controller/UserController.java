@@ -3,6 +3,7 @@ package com.judge.pose.controller;
 
 import com.judge.pose.dao.UserMapper;
 import com.judge.pose.domain.User;
+import com.judge.pose.model.ResultModel2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,15 @@ public class UserController {
         }
     }
 
+    @RequestMapping(value = "{userName}/info", method = RequestMethod.GET)
+    @ResponseBody
+    public User getUserInfo(@PathVariable("userName") String userName){
+        User user = userMapper.getUserByName(userName);
+        return user;
+    }
+
+
+
     @RequestMapping(value = "/user/{id}/Signiture", method = RequestMethod.GET)
     @ResponseBody
     public String getUserSigniture(@PathVariable("id") int id){
@@ -61,6 +71,7 @@ public class UserController {
             user.setPassword(password);
             user.setPhone(phone);
             user.setEmail(email);
+            user.setStatus("user");
             userMapper.register(user);
             return "Register Successfully";
         }else{
