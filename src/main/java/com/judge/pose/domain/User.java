@@ -11,12 +11,15 @@ public class User {
 
     private String email;
 
-    public User(Integer id, String password, String name, String phone, String email) {
+    private String status;
+
+    public User(Integer id, String password, String name, String phone, String email,String status) {
         this.id = id;
         this.password = password;
         this.name = name;
         this.phone = phone;
         this.email = email;
+        this.status = status;
     }
 
     public User() {
@@ -61,5 +64,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 }

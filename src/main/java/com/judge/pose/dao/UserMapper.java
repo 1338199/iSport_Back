@@ -2,10 +2,14 @@ package com.judge.pose.dao;
 
 import com.judge.pose.domain.User;
 
+import com.judge.pose.model.ResultModel2;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import tk.mybatis.mapper.common.Mapper;
+
+import java.util.List;
+import java.util.Map;
 
 public interface UserMapper extends Mapper<User> {
     /*@Insert({"INSERT INTO `pose`.`user` (password,name,phone,email) " +
@@ -29,4 +33,5 @@ public interface UserMapper extends Mapper<User> {
 
     @Select("select count(*) from user_has_exercises where user_id=#{userId} and exercises_id=#{exId}")
     Integer userTakeCourse(@Param("userId") Integer userId, @Param("exId") Integer exId);
+
 }
